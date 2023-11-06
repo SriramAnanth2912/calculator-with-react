@@ -29,6 +29,7 @@ function Calculator() {
       <button data-equals className="span-two">
         =
       </button>
+      {<Working />}
     </div>
   );
 }
