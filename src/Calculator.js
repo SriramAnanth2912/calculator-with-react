@@ -1,4 +1,5 @@
 import React from "react";
+import Working from "./Working.js";
 function Calculator() {
   return (
     <div className="calculator">
