@@ -18,3 +18,5 @@ function Working() {
     });
   });
 }
+
+export default Working;

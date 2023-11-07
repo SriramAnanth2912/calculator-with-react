@@ -1,11 +1,16 @@
 import React from "react";
 import Working from "./Working.js";
+
 function Calculator() {
   return (
     <div className="calculator">
       <div className="result">
-        <div data-previous-operand class="previous-operand"></div>
-        <div data-current-operand class="current-operand"></div>
+        <div data-previous-operand class="previous-operand">
+          123+
+        </div>
+        <div data-current-operand class="current-operand">
+          466
+        </div>
       </div>
       <button data-all-clear className="span-two">
         AC
@@ -29,7 +34,7 @@ function Calculator() {
       <button data-equals className="span-two">
         =
       </button>
-      {<Working />}
+      <script>{<Working />}</script>
     </div>
   );
 }
