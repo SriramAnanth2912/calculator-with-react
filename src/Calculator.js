@@ -71,6 +71,7 @@ function Calculator() {
     }
   }, [prevOperand, operation, currentOperand]);
 
+  const history = () => {}; // use effect to render history when equals was pressed and also use state.
   return (
     <div className="calculator">
       <div className="result">
