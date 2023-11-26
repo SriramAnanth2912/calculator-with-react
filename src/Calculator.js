@@ -1,13 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
-
+import { React, useState, useEffect } from "react";
+import History from "./History";
 function Calculator() {
   const [prevOperand, setprevOperand] = useState("");
   const [currentOperand, setcurrentOperand] = useState("");
   const [operation, setoperation] = useState("");
   const [prevOperandTextElement, setprevOperandTextElement] = useState("");
   const [currentOperandTextElement, setcurrentOperandTextElement] = useState("");
-
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  let countOperations = 0;
   const clearNumber = () => {
     setcurrentOperand("");
     setoperation("");
@@ -19,217 +20,241 @@ function Calculator() {
       return;
     }
     setcurrentOperand(currentOperand + number);
+    if (prevOperand !== "" && operation === "") {
+      setprevOperand(prevOperand + number);
+      setcurrentOperand("");
+    }
   };
   const deleteNumber = () => {
     setcurrentOperand(currentOperand.slice(0, -1));
+    if (currentOperand === "" && prevOperand !== "" && operation !== "") {
+      setoperation("");
+    } else if (currentOperand === "" && operation === "") {
+      setprevOperand(prevOperand.slice(0, -1));
+    }
   };
   const chooseOperation = (ope) => {
-    if (currentOperand === "") return;
-    if (prevOperand !== "") {
+    // need to add negative numbers here
+    countOperations++;
+    if (currentOperand === "" && prevOperand === "") return;
+    if (prevOperand !== null && operation !== "" && currentOperand !== "") {
       compute();
+      setoperation(ope);
+      setcurrentOperand("");
+    } else if (prevOperand === "" && currentOperand !== "") {
+      setoperation(ope);
+      setprevOperand(currentOperand);
+      setcurrentOperand("");
+    } else if (currentOperand === "" && prevOperand !== "" && operation !== "") {
+      setoperation(ope);
+    } else if (prevOperand !== "" && operation === "") {
+      setoperation(ope);
     }
-    if (operation != null) {
-      compute();
-    }
-    setprevOperand(currentOperand);
-    setoperation(ope);
-    setcurrentOperand("");
   };
 
   const compute = () => {
     let computation;
-    const prev = parseFloat(prevOperand);
-    const current = parseFloat(currentOperand);
+    let prev = parseFloat(prevOperand);
+    let current = parseFloat(currentOperand);
     if (isNaN(prev) || isNaN(current)) return;
     switch (operation) {
-      case "+":
+      case "+": {
         computation = prev + current;
         break;
-      case "-":
+      }
+      case "-": {
         computation = prev - current;
         break;
-      case "*":
+      }
+      case "*": {
         computation = prev * current;
         break;
-      case "÷":
+      }
+      case "÷": {
         computation = prev / current;
         break;
+      }
       default:
         return;
     }
+    setprevOperand(computation.toString());
     setcurrentOperand(computation.toString());
+  };
+
+  const equals = () => {
+    compute();
+    // saveHistory();
     setoperation("");
     setprevOperand("");
   };
 
+  const saveHistory = () => {
+    setHistory([...history, `${prevOperand} ${operation} ${currentOperand} = ${currentOperand}`]);
+  };
+
   useEffect(() => {
     setcurrentOperandTextElement(currentOperand);
-    if (operation !== "") {
+    if (operation !== "" && prevOperand !== "") {
       setprevOperandTextElement(`${prevOperand} ${operation}`);
+    } else if (operation === "" && prevOperand !== "") {
+      setprevOperandTextElement(`${prevOperand}`);
     } else {
       setprevOperandTextElement("");
     }
-  }, [prevOperand, operation, currentOperand]);
-
-  const history = () => {}; // use effect to render history when equals was pressed and also use state.
+    // saveHistory();
+  }, [operation, prevOperand, currentOperand]);
+  // useEffect(() => {
+  //   saveHistory();
+  // }, [countOperations]);
+  // const history = () => {}; // use effect to render history when equals was pressed and also use state.
   return (
-    <div className="calculator">
-      <div className="result">
-        <div data-previous-operand class="previous-operand">
-          {prevOperandTextElement}
+    <>
+      <div className="calculator">
+        <div className="result">
+          <div className="previous-operand">{prevOperandTextElement}</div>
+          <div className="current-operand">{currentOperandTextElement}</div>
         </div>
-        <div data-current-operand class="current-operand">
-          {currentOperandTextElement}
-        </div>
+        <button
+          onClick={() => {
+            clearNumber();
+          }}
+          className="span-two"
+        >
+          AC
+        </button>
+        <button
+          onClick={() => {
+            deleteNumber();
+          }}
+        >
+          DEL
+        </button>
+        <button
+          onClick={() => {
+            chooseOperation("÷");
+          }}
+        >
+          ÷
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("1");
+          }}
+        >
+          1
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("2");
+          }}
+        >
+          2
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("3");
+          }}
+        >
+          {" "}
+          3
+        </button>
+        <button
+          onClick={() => {
+            chooseOperation("*");
+          }}
+        >
+          *
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("4");
+          }}
+        >
+          4
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("5");
+          }}
+        >
+          5
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("6");
+          }}
+        >
+          6
+        </button>
+        <button
+          onClick={() => {
+            chooseOperation("+");
+          }}
+        >
+          +
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("7");
+          }}
+        >
+          7
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("8");
+          }}
+        >
+          8
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("9");
+          }}
+        >
+          9
+        </button>
+        <button
+          onClick={() => {
+            chooseOperation("-");
+          }}
+        >
+          -
+        </button>
+        <button
+          onClick={() => {
+            appendNumber(".");
+          }}
+        >
+          .
+        </button>
+        <button
+          onClick={() => {
+            appendNumber("0");
+          }}
+        >
+          0
+        </button>
+        <button
+          onClick={() => {
+            equals();
+          }}
+          className="span-two"
+        >
+          =
+        </button>
       </div>
-      <button
-        data-all-clear
-        onClick={() => {
-          clearNumber();
-        }}
-        className="span-two"
-      >
-        AC
-      </button>
-      <button
-        data-delete
-        onClick={() => {
-          deleteNumber();
-        }}
-      >
-        DEL
-      </button>
-      <button
-        data-operation
-        onClick={() => {
-          chooseOperation("÷");
-        }}
-      >
-        ÷
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("1");
-        }}
-      >
-        1
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("2");
-        }}
-      >
-        2
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("3");
-        }}
-      >
-        {" "}
-        3
-      </button>
-      <button
-        data-operation
-        onClick={() => {
-          chooseOperation("*");
-        }}
-      >
-        *
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("4");
-        }}
-      >
-        4
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("5");
-        }}
-      >
-        5
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("6");
-        }}
-      >
-        6
-      </button>
-      <button
-        data-operation
-        onClick={() => {
-          chooseOperation("+");
-        }}
-      >
-        +
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("7");
-        }}
-      >
-        7
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("8");
-        }}
-      >
-        8
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("9");
-        }}
-      >
-        9
-      </button>
-      <button
-        data-operation
-        onClick={() => {
-          chooseOperation("-");
-        }}
-      >
-        -
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber(".");
-        }}
-      >
-        .
-      </button>
-      <button
-        data-number
-        onClick={() => {
-          appendNumber("0");
-        }}
-      >
-        0
-      </button>
-      <button
-        data-equals
-        onClick={() => {
-          compute();
-        }}
-        className="span-two"
-      >
-        =
-      </button>
-    </div>
+      <div className="history">
+        <button
+          onClick={() => {
+            setShowHistory(!showHistory);
+          }}
+        >
+          show_history
+        </button>
+        <div className="history-text">{showHistory && <History history={history} />}</div>
+      </div>
+    </>
   );
 }
 export default Calculator;

@@ -16,7 +16,6 @@ body {
     display: grid;
     justify-content: center;
     align-content: center;
-    /* min-height: calc(max(80vh, 450px)); */
     min-height: 100vh;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: minmax(120px, auto) repeat(5, 100px);
@@ -58,4 +57,40 @@ body {
 
 .calculator>.span-two {
     grid-column: span 2;
+}
+
+.history {
+    position: absolute;
+    top: 0%;
+    /* left: calc(100vw*8/9); */
+    right: 100px;
+}
+
+.history>button {
+    position: absolute;
+    top: 0px;
+    right: 100px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.75);
+    outline: none !important;
+    border: 1px solid rgba(255, 255, 255, 1) !important;
+    font-size: 2rem;
+    transition-duration: 0.15s !important;
+}
+
+.history>button:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.history-text {
+    width: auto;
+    height: auto;
+    position: relative;
+    top: 25px;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 1) !important;
+}
+
+.history-text>h2 {
+    padding: 0px;
 }
