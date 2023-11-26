@@ -8,7 +8,7 @@ function Calculator() {
   const [currentOperandTextElement, setcurrentOperandTextElement] = useState("");
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-  let countOperations = 0;
+  // let countOperations = 0;
   const clearNumber = () => {
     setcurrentOperand("");
     setoperation("");
@@ -35,7 +35,7 @@ function Calculator() {
   };
   const chooseOperation = (ope) => {
     // need to add negative numbers here
-    countOperations++;
+    // countOperations++;
     if (currentOperand === "" && prevOperand === "") return;
     if (prevOperand !== null && operation !== "" && currentOperand !== "") {
       compute();
@@ -101,12 +101,10 @@ function Calculator() {
     } else {
       setprevOperandTextElement("");
     }
-    // saveHistory();
   }, [operation, prevOperand, currentOperand]);
   // useEffect(() => {
   //   saveHistory();
-  // }, [countOperations]);
-  // const history = () => {}; // use effect to render history when equals was pressed and also use state.
+  // }, []);
   return (
     <>
       <div className="calculator">
@@ -250,7 +248,7 @@ function Calculator() {
             setShowHistory(!showHistory);
           }}
         >
-          show_history
+          History
         </button>
         <div className="history-text">{showHistory && <History history={history} />}</div>
       </div>
