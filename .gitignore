@@ -11,7 +11,7 @@ node_modules/
 
 # production
 /build
-.zip
+Calculator_reactJS.zip
 # misc
 .DS_Store
 .env.local
