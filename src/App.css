@@ -62,13 +62,13 @@ body {
 .history {
     position: absolute;
     top: 0%;
-    right: -10%;
+    right: 2px;
 }
 
 .history>button {
     position: absolute;
     top: 0px;
-    right: 100px;
+    right: 2px;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.75);
     outline: none !important;
@@ -87,8 +87,9 @@ body {
     width: auto;
     height: 200px;
     position: relative;
-    top: 50px;
-    left: -70px;
+    top: 40px;
+    margin-top: 10px;
+    margin-right: 5px;
     background-color: rgba(255, 255, 255, 1);
     border: 1px solid rgba(255, 255, 255, 1) !important;
     border-radius: 5%;

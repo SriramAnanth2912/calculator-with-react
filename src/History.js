@@ -5,27 +5,27 @@ function History({ history }) {
   let dateTime = `${date.getHours()}:${date.getMinutes()}`;
   let fullDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
   return (
-    <>
+    <div className="history-text">
       <h2>{fullDate}</h2>
       {history.length > 0 ? (
         <ul>
           {history.map((calculation, index) =>
-            history[index].num1 !== "" ? (
+            history[index].result !== " " || undefined ? (
               <li key={index}>
                 <span className="time">Time:: {dateTime}</span>
                 <br></br>
                 {calculation.num1} {calculation.operator} {calculation.num2}
-                {calculation.result.toString().length > 6
-                  ? " = " + calculation.result.toString()
-                  : " = " + calculation.result.toString().slice(0, 6)}
+                {calculation.result !== undefined ? " = " + calculation.result : " "}
               </li>
-            ) : null
+            ) : (
+              " "
+            )
           )}
         </ul>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 }
 export default History;

@@ -6,14 +6,7 @@ function Calculator() {
   const [operation, setoperation] = useState("");
   const [prevOperandTextElement, setprevOperandTextElement] = useState("");
   const [currentOperandTextElement, setcurrentOperandTextElement] = useState("");
-  const [result, setResult] = useState("");
   const [history, setHistory] = useState([]);
-  const [currentCalculation, setCurrentCalculation] = useState({
-    num1: prevOperand,
-    num2: currentOperand,
-    operator: operation || "",
-    result: result,
-  });
   const [showHistory, setShowHistory] = useState(false);
   // let countOperations = 0;
   const clearNumber = () => {
@@ -86,22 +79,18 @@ function Calculator() {
     }
     setprevOperand(computation.toString());
     setcurrentOperand(computation.toString());
-    setResult(computation.toString());
-    console.log("result=", computation.toString());
-    console.log("prevOperand=", prev.toString());
-    setCurrentCalculation({
-      num1: prev.toString(),
-      num2: current.toString(),
-      operator: operation.toString(),
-      result: computation.toString(),
-    });
-    console.log(currentCalculation);
-
-    setHistory([...history, currentCalculation]);
+    setHistory([
+      ...history,
+      {
+        num1: prev.toString(),
+        num2: current.toString(),
+        operator: operation.toString(),
+        result: computation.toString(),
+      },
+    ]);
   };
   const equals = () => {
     compute();
-    setHistory([...history, currentCalculation]);
     setoperation("");
     setprevOperand("");
   };
@@ -261,7 +250,7 @@ function Calculator() {
         >
           History
         </button>
-        <div className="history-text">{showHistory && <History history={history} />}</div>
+        <div>{showHistory && <History history={history} />}</div>
       </div>
     </>
   );
